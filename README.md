@@ -3,8 +3,9 @@
 This simple mod will stow your last used weapon on your back. Accepted weapons can be defined in the ini file, as well as the offset position and rotation. Version 2 adds optional support for AI peds, see below for configuration details. 
 
 
-##Default ini values and explanation
+## Default ini values and explanation
 
+```
 [Main]
 DeleteWeaponKey = Decimal  //The key for deleting the weapon off the player's back.
 HideWhileInVehicle = true  //If true, the weapon will be invisible while the player is in a vehicle.
@@ -22,9 +23,9 @@ AcceptedWeapons = weapon_smg, weapon_pumpshotgun, weapon_pumpshotgun_mk2, weapon
 OffsetPosition = 0.0,-0.17,-0.02  //Position of the weapon relative to the ped's Spine3 bone.
 Rotation = 0.0,165,0.0  //Rotation of the weapon for AI.
 List of weapon names (you must use the "weapon_blahblah" format): https://wiki.rage.mp/index.php?title=Weapons
+```
 
-
-##Features
+## Features
 
 Accepted weapons will show on your back
 You must first equip the weapon, then switch to another or holster it
@@ -37,7 +38,7 @@ Key to delete the weapon from your back on the fly, default Decimal key (the one
 Customizable support for AI peds
  
 
-##Installation
+## Installation
 
 Extract BackWeapon.dll and BackWeapon.ini to your Plugins folder
 Load with RPH
