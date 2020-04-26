@@ -27,21 +27,21 @@ List of weapon names (you must use the "weapon_blahblah" format): https://wiki.r
 
 ## Features
 
-Accepted weapons will show on your back
-You must first equip the weapon, then switch to another or holster it
-If you switch to another accepted weapon, that will replace current stowed weapon
-Stowed weapon will show all attachments and tint
-Option to disable the flashlight since it activates when you use the flashlight on your equipped weapon
-Customizable accepted weapons, offset position, and rotation
-Option to hide weapon on back while in a vehicle (will be restored when you exit the vehicle)
-Key to delete the weapon from your back on the fly, default Decimal key (the one on your numpad) (keys reference - https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=netframework-4.8)
-Customizable support for AI peds
+- Accepted weapons will show on your back
+  - You must first equip the weapon, then switch to another or holster it
+  - If you switch to another accepted weapon, that will replace current stowed weapon
+- Stowed weapon will show all attachments and tint
+  - Option to disable the flashlight since it activates when you use the flashlight on your equipped weapon
+- Customizable accepted weapons, offset position, and rotation
+- Option to hide weapon on back while in a vehicle (will be restored when you exit the vehicle)
+- Key to delete the weapon from your back on the fly, default Decimal key (the one on your numpad) (keys reference - https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=netframework-4.8)
+- Customizable support for AI peds
  
 
 ## Installation
 
-Extract BackWeapon.dll and BackWeapon.ini to your Plugins folder
-Load with RPH
+- Extract BackWeapon.dll and BackWeapon.ini to your Plugins folder
+- Load with RPH
  
 
 I know there already is a mod like this out there, but I wanted something that uses RPH and is customizable. So here is that.
