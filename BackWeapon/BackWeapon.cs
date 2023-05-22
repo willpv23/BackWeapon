@@ -10,19 +10,19 @@ using Rage.Native;
 
 [assembly: Rage.Attributes.Plugin("BackWeapon", Description = "Plugin to show weapon on back.", Author = "willpv23", PrefersSingleInstance = true)]
 
-//2.0.5 changed isvalid to exists
-//      moved EntryPoint & GetIniValues to own files (untested)
-//      added luxery finishes
+//2.0.6 Changed player process to use WeaponDescriptor's hash instead of getting the WeaponAsset when created weaponOnBack
+//      
+//      
 
 namespace BackWeapon
 {
-    internal class BackWeapon
+    class BackWeapon
     {
-        static Dictionary<string, object> iniValues = ConfigLoader.GetIniValues();
+        public static Dictionary<string, object> iniValues = ConfigLoader.GetIniValues();
 
         static List<uint> acceptedWeapons = (List<uint>) iniValues["AcceptedWeapons"];
-        static Vector3 offsetPosition = (Vector3) iniValues["OffsetPosition"];
-        static Rotator Rotation = (Rotator) iniValues["Rotation"];
+        public static Vector3 offsetPosition = (Vector3) iniValues["OffsetPosition"];
+        public static Rotator Rotation = (Rotator) iniValues["Rotation"];
         static bool hideWhileInVehicle = (bool) iniValues["HideWhileInVehicle"];
         static bool disableFlashlight = (bool) iniValues["DisableFlashlight"];
         static Keys deleteWeaponKey = (Keys) iniValues["DeleteWeaponKey"];
@@ -211,7 +211,7 @@ namespace BackWeapon
                             weaponOnBack.Delete();
                             weaponOnBack = null;
                         }
-                        weaponOnBack = new Weapon(currentWeapon.Asset, ped.Position, 30);
+                        weaponOnBack = new Weapon((uint)currentWeapon.Hash, ped.Position, 30);
                         List<uint> componentHashes = GetComponentHashes((uint)currentWeapon.Hash, ped);
                         foreach (uint hash in componentHashes)
                         {
@@ -277,6 +277,24 @@ namespace BackWeapon
                 }
             }
             return weaponOnBack;
+        }
+
+        public static void UpdateConfig()
+        {
+            iniValues = ConfigLoader.GetIniValues();
+
+            acceptedWeapons = (List<uint>)iniValues["AcceptedWeapons"];
+            offsetPosition = (Vector3)iniValues["OffsetPosition"];
+            Rotation = (Rotator)iniValues["Rotation"];
+            hideWhileInVehicle = (bool)iniValues["HideWhileInVehicle"];
+            disableFlashlight = (bool)iniValues["DisableFlashlight"];
+            deleteWeaponKey = (Keys)iniValues["DeleteWeaponKey"];
+            copsOnly = (bool)iniValues["CopsOnly"];
+            aiAcceptedWeapons = (List<uint>)iniValues["AIAcceptedWeapons"];
+            aiOffsetPosition = (Vector3)iniValues["AIOffsetPosition"];
+            aiRotation = (Rotator)iniValues["AIRotation"];
+            aiHideWhileInVehicle = (bool)iniValues["AIHideWhileInVehicle"];
+            enableBestWeapon = (bool)iniValues["EnableBestWeapon"];
         }
     }
 }

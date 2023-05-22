@@ -12,7 +12,7 @@ namespace BackWeapon
 {
     public class EntryPoint
     {
-        static bool enableAI = (bool) ConfigLoader.GetIniValues()["EnableAI"];
+        static bool enableAI = (bool) ConfigLoader.GetIniValues(false)["EnableAI"];
 
         private static void Main()
         {
@@ -29,6 +29,9 @@ namespace BackWeapon
                 var AIProcessFiber = new GameFiber(BackWeapon.AIPedsLoop);
                 AIProcessFiber.Start();
             }
+            Game.LogTrivial("Initializing menu...");
+            var MenuFiber = new GameFiber(Menu.LoadMenu);
+            MenuFiber.Start();
             Game.LogTrivial("Stow That Weapon (BackWeapon.dll) by willpv23 has been loaded!");
             GameFiber.Hibernate();
         }

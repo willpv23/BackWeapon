@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
+using System.Drawing;
 
 namespace BackWeapon
 {
     class ConfigLoader
     {
-        public static Dictionary<string, object> GetIniValues()
+        public static Dictionary<string, object> GetIniValues(bool log = true)
         {
-            Game.LogTrivial("Loading Configuration...");
+            if (log)
+            {
+                Game.LogTrivial("Loading Configuration...");
+            }
             Dictionary<string, object> iniValues = new Dictionary<string, object> { };
             InitializationFile ini = InitializeFile();
 
@@ -32,6 +36,7 @@ namespace BackWeapon
                 }
             }
             iniValues.Add("AcceptedWeapons", acceptedWeaponHashes);
+            iniValues.Add("AcceptedWeaponStrings", acceptedWeaponStrings);
 
             Vector3 offsetPosition = ini.ReadVector3("Main", "OffsetPosition", new Vector3(0.0f, -0.19f, -0.02f));
             iniValues.Add("OffsetPosition", offsetPosition);
@@ -49,7 +54,7 @@ namespace BackWeapon
             Keys deleteWeaponKey = (Keys)Enum.Parse(typeof(Keys), deleteWeaponKeyString);
             iniValues.Add("DeleteWeaponKey", deleteWeaponKey);
 
-            bool enableAI = ini.ReadBoolean("AI", "EnableAI", false);
+            bool enableAI = ini.ReadBoolean("AI", "EnableAI", true);
             iniValues.Add("EnableAI", enableAI);
 
             bool copsOnly = ini.ReadBoolean("AI", "CopsOnly", true);
@@ -69,6 +74,8 @@ namespace BackWeapon
                 }
             }
             iniValues.Add("AIAcceptedWeapons", aiAcceptedWeaponHashes);
+            iniValues.Add("AIAcceptedWeaponStrings", aiAcceptedWeaponStrings);
+
 
             Vector3 aiOffsetPosition = ini.ReadVector3("AI", "OffsetPosition", new Vector3(0.0f, -0.19f, -0.02f));
             iniValues.Add("AIOffsetPosition", aiOffsetPosition);
@@ -82,11 +89,18 @@ namespace BackWeapon
             bool enableBestWeapon = ini.ReadBoolean("AI", "EnableBestWeapon");
             iniValues.Add("EnableBestWeapon", enableBestWeapon);
 
+            string menuKeyString = ini.ReadString("Main", "MenuKey", "F5");
+            Keys menuKey = (Keys)Enum.Parse(typeof(Keys), menuKeyString);
+            iniValues.Add("MenuKey", menuKey);
+
             string config = null;
             foreach (string key in iniValues.Keys.ToArray<string>())
                 config += $"{key}: {iniValues[key]}; ";
 
-            Game.LogTrivial($"Loaded configuration: {config}");
+            if (log)
+            {
+                Game.LogTrivial($"Loaded configuration: {config}");
+            }
 
             return iniValues;
         }
@@ -94,9 +108,86 @@ namespace BackWeapon
         private static InitializationFile InitializeFile()
         {
             InitializationFile ini = new InitializationFile("Plugins/BackWeapon.ini");
+            
+            //Create missing entries
+            if (!ini.DoesKeyExist("Main", "AcceptedWeapons"))
+            {
+                ini.Write("Main", "AcceptedWeapons", "weapon_smg, weapon_pumpshotgun, weapon_pumpshotgun_mk2, weapon_carbinerifle, weapon_carbinerifle_mk2, weapon_specialcarbine, weapon_specialcarbine_mk2");
+            }
+            if (!ini.DoesKeyExist("Main", "OffSetPosition"))
+            {
+                ini.Write("Main", "OffsetPosition", new Vector3(0.0f, -0.19f, -0.02f));
+            }
+            if (!ini.DoesKeyExist("Main", "Rotation"))
+            {
+                ini.Write("Main", "Rotation", new Rotator(0.0f, 165f, 0.0f));
+            }
+            if (!ini.DoesKeyExist("Main", "HideWhileInVehicle"))
+            {
+                ini.Write("Main", "HideWhileInVehicle", true);
+            }
+            if (!ini.DoesKeyExist("Main", "DisableFlashlight"))
+            {
+                ini.Write("Main", "DisableFlashlight", false);
+            }
+            if (!ini.DoesKeyExist("Main", "DeleteWeaponKey"))
+            {
+                ini.Write("Main", "DeleteWeaponKey", "Decimal");
+            }
+            if (!ini.DoesKeyExist("AI", "EnableAI"))
+            {
+                ini.Write("AI", "EnableAI", true);
+            }
+            if (!ini.DoesKeyExist("AI", "CopsOnly"))
+            {
+                ini.Write("AI", "CopsOnly", true);
+            }
+            if (!ini.DoesKeyExist("AI", "AcceptedWeapons"))
+            {
+                ini.Write("AI", "AcceptedWeapons", "WEAPON_CARBINERIFLE_MK2,WEAPON_SMG");
+            }
+            if (!ini.DoesKeyExist("AI", "OffsetPosition"))
+            {
+                ini.Write("AI", "OffsetPosition", new Vector3(0.0f, -0.19f, -0.02f));
+            }
+            if (!ini.DoesKeyExist("AI", "Rotation"))
+            {
+                ini.Write("AI", "Rotation", new Rotator(0.0f, 165f, 0.0f));
+            }
+            if (!ini.DoesKeyExist("AI", "HideWhileInVehicle"))
+            {
+                ini.Write("AI", "HideWhileInVehicle", true);
+            }
+            if (!ini.DoesKeyExist("AI", "EnableBestWeapon"))
+            {
+                ini.Write("AI", "EnableBestWeapon", true);
+            }
+            if (!ini.DoesKeyExist("Main", "MenuKey"))
+            {
+                ini.Write("Main", "MenuKey", "F5");
+            }
+            //end
+
             ini.Create();
             return ini;
         }
 
+        public static void UpdateIniFile(string sectionName, string keyName, object value)
+        {
+            Game.LogTrivial($"Updating ini value: [{sectionName}] {keyName} = {value.ToString()}");
+            InitializationFile ini = new InitializationFile("Plugins/BackWeapon.ini");
+
+            if (!ini.DoesSectionExist(sectionName))
+            {
+                Game.LogTrivial("Failed to update ini file: unknown section");
+                return;
+            }
+            if (!ini.DoesKeyExist(sectionName, keyName))
+            {
+                Game.LogTrivial("Failed to update ini file: unknown key");
+                return;
+            }
+            ini.Write(sectionName, keyName, value);
+        }
     }
 }
