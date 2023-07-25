@@ -198,7 +198,14 @@ namespace BackWeapon
                         try
                         {
                             while (ped.Inventory.EquippedWeapon == currentWeapon)
+                            {
+                                if (weaponOnBack != null && Game.IsKeyDown(deleteWeaponKey))
+                                {
+                                    weaponOnBack.Delete();
+                                    weaponOnBack = null;
+                                }
                                 GameFiber.Yield();
+                            }
                         }
                         catch
                         {
@@ -210,6 +217,7 @@ namespace BackWeapon
                             weaponOnBack = null;
                         }
                         weaponOnBack = new Weapon((uint)currentWeapon.Hash, ped.Position, 30);
+                        weaponOnBack.Model.LoadAndWait();
                         List<uint> componentHashes = GetComponentHashes((uint)currentWeapon.Hash, ped);
                         foreach (uint hash in componentHashes)
                         {
