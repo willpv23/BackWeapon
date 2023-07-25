@@ -10,11 +10,13 @@ Added a new menu (default key: F5) using RAGENativeUI that will allow you to cha
 
 Settings can also be changed manually in the .ini file and reloaded via the Reload ini File menu option. The .ini file is no longer provided with the download and is instead generated if it does not exist on first load of the plugin. If it does exist, the plugin will check for missing values and add them (in this case, the menu key is the only new option that will be added for everyone, defaulting to F5). This means you can install this new update without ruining your current settings.
 
-RPH NOTE: Having more than 64 weapons in your inventory will cause your game to crash due to an internal issue with RPH. This is known and a fix will be released with the next version of RPH.
+~RPH NOTE: Having more than 64 weapons in your inventory will cause your game to crash due to an internal issue with RPH. This is known and a fix will be released with the next version of RPH.~
 
 UPDATE NOTE: The menu has not undergone super extensive testing so if you have any issues with it please let me know. Version 2.0.5 is still available for download if the update doesn't work for you.
 
 GTA V NOTE: Sometimes the GTA V folder gets set as read-only. This may prevent the plugin from writing to the ini file which would likely result in a crash. Please ensure your GTA V folder is not set to read-only before using this update.
+
+Miner update version 3.1.0 adds a new ini option that will be added when you first load this version. It is called AddonComponents and is to be used if you have any addon weapon components (all default weapon components are already accounted for), so that they show up on the stowed weapon. You add them using the name (ie, COMPONENT_AT_AR_FLSH) and separate multiple values with a comma.
 
 -----
 
@@ -42,6 +44,9 @@ AcceptedWeapons = weapon_smg, weapon_pumpshotgun, weapon_pumpshotgun_mk2, weapon
 OffsetPosition = 0.0,-0.17,-0.02  //Position of the weapon relative to the ped's Spine3 bone.
 Rotation = 0.0,165,0.0  //Rotation of the weapon for AI.
 List of weapon names (you must use the "weapon_blahblah" format): https://wiki.rage.mp/index.php?title=Weapons
+
+[Advanced]
+AddonComponents = None //Here you can add any addon weapon components you have installed so that they will show up on the stowed weapon. You need to use the name of component, ie COMPONENT_AT_AR_FLSH. Multiple entries should be separated by a comma.
 ```
 
 ## Features
