@@ -93,6 +93,22 @@ namespace BackWeapon
             Keys menuKey = (Keys)Enum.Parse(typeof(Keys), menuKeyString);
             iniValues.Add("MenuKey", menuKey);
 
+            string[] addonComponentStrings = ini.ReadString("Advanced", "AddonComponents", "None").Split(',');
+            List<uint> addonComponentHashes = new List<uint> { };
+            foreach (var component in addonComponentStrings)
+            {
+                try
+                {
+                    addonComponentHashes.Add(Game.GetHashKey(component.Trim(' ')));
+                }
+                catch
+                {
+                    Game.LogTrivial($"{component} is not a valid weapon component");
+                }
+            }
+            iniValues.Add("AddonComponents", addonComponentHashes);
+            iniValues.Add("AddonComponentStrings", addonComponentStrings);
+
             string config = null;
             foreach (string key in iniValues.Keys.ToArray<string>())
                 config += $"{key}: {iniValues[key]}; ";
@@ -165,6 +181,10 @@ namespace BackWeapon
             if (!ini.DoesKeyExist("Main", "MenuKey"))
             {
                 ini.Write("Main", "MenuKey", "F5");
+            }
+            if (!ini.DoesKeyExist("Advanced", "AddonComponents"))
+            {
+                ini.Write("Advanced", "AddonComponents", "None");
             }
             //end
 
