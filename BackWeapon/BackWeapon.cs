@@ -303,6 +303,7 @@ namespace BackWeapon
             aiRotation = (Rotator)iniValues["AIRotation"];
             aiHideWhileInVehicle = (bool)iniValues["AIHideWhileInVehicle"];
             enableBestWeapon = (bool)iniValues["EnableBestWeapon"];
+            addonComponents = (List<uint>)iniValues["AddonComponents"];
         }
     }
 }
