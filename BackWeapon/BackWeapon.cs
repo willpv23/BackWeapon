@@ -164,6 +164,7 @@ namespace BackWeapon
         {
             Weapon weaponOnBack = null;
             weaponOnBack = new Weapon(weapontoadd, ped.Position, 30);
+            weaponOnBack.Model.LoadAndWait();
             List<uint> aiComponentHashes = GetComponentHashes(weapontoadd, ped);
             foreach (uint hash in aiComponentHashes)
             {
