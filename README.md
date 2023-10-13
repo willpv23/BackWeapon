@@ -43,11 +43,11 @@ HideWhileInVehicle = true  //If true, the weapon will be invisible while the ped
 AcceptedWeapons = weapon_smg, weapon_pumpshotgun, weapon_pumpshotgun_mk2, weapon_carbinerifle, weapon_carbinerifle_mk2, weapon_specialcarbine, weapon_specialcarbine_mk2  //List of weapons that will show on the peds' backs.
 OffsetPosition = 0.0,-0.17,-0.02  //Position of the weapon relative to the ped's Spine3 bone.
 Rotation = 0.0,165,0.0  //Rotation of the weapon for AI.
-List of weapon names (you must use the "weapon_blahblah" format): https://wiki.rage.mp/index.php?title=Weapons
 
 [Advanced]
 AddonComponents = None //Here you can add any addon weapon components you have installed so that they will show up on the stowed weapon. You need to use the name of component, ie COMPONENT_AT_AR_FLSH. Multiple entries should be separated by a comma.
 ```
+List of weapon names (you must use the "weapon_blahblah" format): https://wiki.rage.mp/index.php?title=Weapons
 
 ## Features
 
